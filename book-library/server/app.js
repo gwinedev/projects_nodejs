@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const bcrypt = require("bcryptjs");
 const port = 3001;
 const db = require("./db");
 const jwt = require("jsonwebtoken");
@@ -25,7 +26,7 @@ app.post("/api/register", (req, res) => {
 
 // Login user
 app.post("/api/login", (req, res) => {
-  User.findOne({ username: req.body.user })
+  User.findOne({ username: req.body.username })
     .then((user) => {
       if (!user) {
         res.status(404).json({ message: "User not found" });
@@ -43,6 +44,7 @@ app.post("/api/login", (req, res) => {
       }
     })
     .catch((err) => {
+      console.error(err);
       res.status(500).json({ message: "Error logging in user" });
     });
 });

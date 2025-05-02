@@ -1,5 +1,9 @@
+
 ###
+# @token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODE0ZmY2ZTEzYThmMWZhODRiNDY2NzQiLCJpYXQiOjE3NDYyMDczMjMsImV4cCI6MTc0NjIxMDkyM30.SS06rlL5sNUQxqJ0kiSrf74JzINHv-nGJqGC3mDEDCA
+
 GET http://localhost:3001/api/books
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODE0ZmY2ZTEzYThmMWZhODRiNDY2NzQiLCJpYXQiOjE3NDYyMDczMjMsImV4cCI6MTc0NjIxMDkyM30.SS06rlL5sNUQxqJ0kiSrf74JzINHv-nGJqGC3mDEDCA
 
 ###
 POST http://localhost:3001/api/books
@@ -50,3 +54,15 @@ Content-Type: application/json
     "username":"bola",
     "password":"abimbim"
 }
+
+#Login User
+###
+POST http://localhost:3001/api/login
+Content-Type: application/json
+
+{
+    "username":"gwine",
+    "password":"abc123"
+}
+
+#token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODE0ZmY2ZTEzYThmMWZhODRiNDY2NzQiLCJpYXQiOjE3NDYyMDczMjMsImV4cCI6MTc0NjIxMDkyM30.SS06rlL5sNUQxqJ0kiSrf74JzINHv-nGJqGC3mDEDCA
