@@ -7,12 +7,32 @@ const jwt = require("jsonwebtoken");
 
 const Book = require("./bookModel");
 const User = require("./userModel");
-
+const roles = require("./roles");
 app.use(express.json());
+
+//
+app.use((req, res, next) => {
+  const token = req.header("Authorization");
+  if (!token) {
+    res.status(401).json({ messaghe: "Access denied" });
+  } else {
+    jwt.verify(token, "secretkey", (err, decoded) => {
+      if (err) {
+        res.status(401).json({ message: "Invalid token" });
+      } else {
+        req.user = decoded;
+        const userRole = req.user.role;
+        const permissions = roles[userRole];
+        req.permissions = permissions;
+        next();
+      }
+    });
+  }
+});
 
 // Register a auser
 app.post("/api/register", (req, res) => {
-  const user = new User(req.body);
+  const user = new User({ ...req.body, role: "user" });
   user
     .save()
     .then((newUser) => {
@@ -111,7 +131,7 @@ app.get("/api/books/:id", (req, res) => {
 
 // Update a book (requires authentication)
 app.put("/api/books/:id", (req, res) => {
-  if (!req.user) {
+  if (!req.permissions.canUpdateBooks) {
     res.status(401).json({ message: "Access denied" });
   } else {
     app.put("/api/books/:id", (req, res) => {
