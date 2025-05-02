@@ -1,0 +1,52 @@
+###
+GET http://localhost:3001/api/books
+
+###
+POST http://localhost:3001/api/books
+Content-Type: application/json
+
+{
+    "title":"123",
+    "author":"Charles ",
+    "description":"wanted and asked for more"
+}
+
+
+###
+GET http://localhost:3001/api/books/6814cfe544d8274ee762cc8b
+
+
+###
+PUT http://localhost:3001/api/books/6814f94aa433dc92fd27ec93
+Content-Type: application/json
+
+{
+    "title":"The Book of Eli",
+    "author":"Washington Denzel",
+    "description":"The book of Eli, i think"
+}
+
+
+###
+DELETE http://localhost:3001/api/books/6814d88b5132d50fc20a8430
+
+
+# Register User
+###
+POST http://localhost:3001/api/register
+Content-Type: application/json
+
+{
+    "username":"gwine",
+    "password":"abc123"
+}
+
+# Register User
+###
+POST http://localhost:3001/api/register
+Content-Type: application/json
+
+{
+    "username":"bola",
+    "password":"abimbim"
+}
