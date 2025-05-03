@@ -1,93 +1,31 @@
-
+#get products
 ###
-# @token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODE0ZmY2ZTEzYThmMWZhODRiNDY2NzQiLCJpYXQiOjE3NDYyMTAwMDksImV4cCI6MTc0NjIxMzYwOX0.gaFTkoyT2V1tbVEKk_4Ec9XbH-juXLYt_ACMFoq9niA
-GET http://localhost:3001/api/books
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODE0ZmY2ZTEzYThmMWZhODRiNDY2NzQiLCJpYXQiOjE3NDYyMTAxMDgsImV4cCI6MTc0NjIxMzcwOH0.BBt4nBMaNIoDKyBPsBnqFlzYb4iaoOMcmhHxEFxgzv8
+GET http://localhost:3001/api/products
 
+#create a product
 ###
-POST http://localhost:3001/api/books
+POST http://localhost:3001/api/products
+Content-Type: application/json
+ 
+ {
+     "name": "Aromatherapy",
+     "price": 32.00,
+     "description": " stylish diffuser and oil set."
+  }
+
+#get one product
+###
+GET http://localhost:3001/api/products/68163b607861fefd6bb3cd07
+
+#update a product
+###
+PUT http://localhost:3001/api/products/68163c177861fefd6bb3cd15
 Content-Type: application/json
 
 {
-    "title":"123",
-    "author":"Charles ",
-    "description":"wanted and asked for more"
+    "price": 33.99
 }
 
-
+#delete a product
 ###
-GET http://localhost:3001/api/books/6814cfe544d8274ee762cc8b
-
-
-###
-PUT http://localhost:3001/api/books/6814f94aa433dc92fd27ec93
-Content-Type: application/json
-
-{
-    "title":"The Book of Eli",
-    "author":"Washington Denzel",
-    "description":"The book of Eli, i think"
-}
-
-
-###
-DELETE http://localhost:3001/api/books/6814d88b5132d50fc20a8430
-
-
-# Register User
-###
-POST http://localhost:3001/api/register
-Content-Type: application/json
-
-{
-    "username":"gwine",
-    "password":"abc123"
-}
-
-# Register User
-###
-POST http://localhost:3001/api/register
-Content-Type: application/json
-
-{
-    "username":"bola",
-    "password":"abimbim"
-}
-
-#Login User
-###
-POST http://localhost:3001/api/login
-Content-Type: application/json
-
-{
-    "username":"gwine",
-    "password":"abc123"
-}
-
-#token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODE0ZmY2ZTEzYThmMWZhODRiNDY2NzQiLCJpYXQiOjE3NDYyMDczMjMsImV4cCI6MTc0NjIxMDkyM30.SS06rlL5sNUQxqJ0kiSrf74JzINHv-nGJqGC3mDEDCA
-
-#register admin
-
-###
-POST http://localhost:3001/api/admin/register
-Content-Type: application/json
-secretKey:mySecretKey
-
-{
-    "username":"gwine2",
-    "password":"abc123"
-}
-
-
-#register admin
-
-###
-POST http://localhost:3001/api/admin/login
-Content-Type: application/json
-# secretKey:mySecretKey
-
-{
-    "username":"gwine2",
-    "password":"abc123"
-}
-
+DELETE http://localhost:3001/api/products/68164051e79131f457f1363b
