@@ -65,3 +65,15 @@ Content-Type: application/json
 }
 
 #token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODE0ZmY2ZTEzYThmMWZhODRiNDY2NzQiLCJpYXQiOjE3NDYyMDczMjMsImV4cCI6MTc0NjIxMDkyM30.SS06rlL5sNUQxqJ0kiSrf74JzINHv-nGJqGC3mDEDCA
+
+#register admin
+
+###
+POST http://localhost:3001/api/admin/register
+Content-Type: application/json
+secretKey:mySecretKey
+
+{
+    "username":"gwine",
+    "password":"abc123"
+}

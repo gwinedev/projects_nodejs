@@ -51,9 +51,10 @@ app.post("/api/login", (req, res) => {
 
 // Register admin
 app.post("/api/admin/register", (req, res) => {
-  const secretKey = req.header("SecretKey");
+  const secretKey = req.header("secretKey");
   if (secretKey !== "mySecretKey") {
     res.status(401).json({ message: "Unauthorized" });
+    return;
   }
   const user = new User({ ...req.body, role: "admin" });
   user
