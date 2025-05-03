@@ -49,6 +49,23 @@ app.post("/api/login", (req, res) => {
     });
 });
 
+// Register admin
+app.post("/api/admin/register", (req, res) => {
+  const secretKey = req.header("SecretKey");
+  if (secretKey !== "mySecretKey") {
+    res.status(401).json({ message: "Unauthorized" });
+  }
+  const user = new User({ ...req.body, role: "admin" });
+  user
+    .save()
+    .then((newUser) => {
+      res.json(newUser);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ message: "Error registering admin user" });
+    });
+});
 // Protect routes with JWT
 app.use((req, res, next) => {
   const token = req.header("Authorization");
