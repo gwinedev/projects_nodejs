@@ -67,6 +67,34 @@ app.post("/api/admin/register", (req, res) => {
       res.status(500).json({ message: "Error registering admin user" });
     });
 });
+
+// Login admin
+app.post("/api/admin/login", (req, res) => {
+  User.findOne({ username: req.body.username })
+    .then((user) => {
+      if (!user) {
+        res.status(404).json({ message: "User not found" });
+      } else if (user.role !== "admin") {
+        res.status(401).json({ message: "Access denied" });
+      } else {
+        bcrypt.compare(req.body.password, user.password).then((isMatch) => {
+          if (isMatch) {
+            const token = jwt.sign({ userId: user_.id }, "secretKey", {
+              expiresIn: "24h",
+            });
+            res.json({ token });
+          } else {
+            res.status(401).json({ message: "Invalid password" });
+          }
+        });
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).json({ message: "Error logging in admin user" });
+    });
+});
+
 // Protect routes with JWT
 app.use((req, res, next) => {
   const token = req.header("Authorization");
