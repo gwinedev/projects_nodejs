@@ -10,26 +10,6 @@ const User = require("./userModel");
 const roles = require("./roles");
 app.use(express.json());
 
-//
-app.use((req, res, next) => {
-  const token = req.header("Authorization");
-  if (!token) {
-    res.status(401).json({ messaghe: "Access denied" });
-  } else {
-    jwt.verify(token, "secretkey", (err, decoded) => {
-      if (err) {
-        res.status(401).json({ message: "Invalid token" });
-      } else {
-        req.user = decoded;
-        const userRole = req.user.role;
-        const permissions = roles[userRole];
-        req.permissions = permissions;
-        next();
-      }
-    });
-  }
-});
-
 // Register a auser
 app.post("/api/register", (req, res) => {
   const user = new User({ ...req.body, role: "user" });
@@ -80,6 +60,9 @@ app.use((req, res, next) => {
         res.status(401).json({ message: "Invalid token" });
       } else {
         req.user = decoded;
+        const userRole = req.user.role;
+        const permissions = roles[userRole];
+        req.permissions = permissions;
         next();
       }
     });
@@ -134,19 +117,17 @@ app.put("/api/books/:id", (req, res) => {
   if (!req.permissions.canUpdateBooks) {
     res.status(401).json({ message: "Access denied" });
   } else {
-    app.put("/api/books/:id", (req, res) => {
-      Book.findByIdAndUpdate(req.params.id, req.body, { new: true })
-        .then((updatedBook) => {
-          if (!updatedBook) {
-            res.status(404).json({ message: "Book not found" });
-          } else {
-            res.json(updatedBook);
-          }
-        })
-        .catch((err) => {
-          res.status(500).json({ message: "Error updating book" });
-        });
-    });
+    Book.findByIdAndUpdate(req.params.id, req.body, { new: true })
+      .then((updatedBook) => {
+        if (!updatedBook) {
+          res.status(404).json({ message: "Book not found" });
+        } else {
+          res.json(updatedBook);
+        }
+      })
+      .catch((err) => {
+        res.status(500).json({ message: "Error updating book" });
+      });
   }
 });
 
@@ -164,6 +145,12 @@ app.delete("/api/books/:id", (req, res) => {
       res.status(500).json({ message: "Error deleting book" });
     });
 });
+
+app.use((err, req, res, next) => {
+  console.log(err);
+  res.status(500).json({ message: "Internal Server Error" });
+});
+
 app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
 });
