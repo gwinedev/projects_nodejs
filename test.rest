@@ -74,6 +74,20 @@ Content-Type: application/json
 secretKey:mySecretKey
 
 {
-    "username":"gwine",
+    "username":"gwine2",
     "password":"abc123"
 }
+
+
+#register admin
+
+###
+POST http://localhost:3001/api/admin/login
+Content-Type: application/json
+# secretKey:mySecretKey
+
+{
+    "username":"gwine2",
+    "password":"abc123"
+}
+

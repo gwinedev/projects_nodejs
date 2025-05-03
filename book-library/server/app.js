@@ -72,6 +72,7 @@ app.post("/api/admin/register", (req, res) => {
 app.post("/api/admin/login", (req, res) => {
   User.findOne({ username: req.body.username })
     .then((user) => {
+      console.log(user);
       if (!user) {
         res.status(404).json({ message: "User not found" });
       } else if (user.role !== "admin") {
@@ -79,7 +80,7 @@ app.post("/api/admin/login", (req, res) => {
       } else {
         bcrypt.compare(req.body.password, user.password).then((isMatch) => {
           if (isMatch) {
-            const token = jwt.sign({ userId: user_.id }, "secretKey", {
+            const token = jwt.sign({ userId: user._id }, "secretKey", {
               expiresIn: "24h",
             });
             res.json({ token });
