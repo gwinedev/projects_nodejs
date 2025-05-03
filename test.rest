@@ -29,3 +29,27 @@ Content-Type: application/json
 #delete a product
 ###
 DELETE http://localhost:3001/api/products/68164051e79131f457f1363b
+
+
+#Register a user
+###
+POST http://localhost:3001/api/auth/register
+Content-Type: application/json
+
+{
+    "name":"gwine",
+    "password":"phone123",
+    "email":"gwinedev@gmail.com"
+}
+
+
+#Login a user
+###
+POST http://localhost:3001/api/auth/login
+Content-Type: application/json
+
+{
+    "name":"gwine",
+    "password":"phone123",
+    "email":"gwinedev@gmail.com"
+}
