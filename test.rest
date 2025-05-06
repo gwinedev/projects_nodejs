@@ -37,9 +37,9 @@ POST http://localhost:3001/api/auth/register
 Content-Type: application/json
 
 {
-    "name":"Frank Lampard",
+    "name":"Tammy Abraham",
     "password":"isaac123",
-    "email":"franklaw@gmail.com"
+    "email":"abrahamtammy@gmail.com"
 }
 
 

@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
+const { findOne } = require("../models/Prod");
 
 const register = async (req, res) => {
   const { email, name, password } = req.body;
@@ -12,6 +13,10 @@ const register = async (req, res) => {
       .json({ message: "Name, email and password are required" });
   }
   try {
+    const userExist = await User.findOne({ email });
+    if (userExist) {
+      return res.status(404).json({ message: "User already exist" });
+    }
     const user = new User({ email, name, password });
     console.log(`Password before saving ${user.password}`);
     await user.save();
@@ -37,13 +42,7 @@ const login = async (req, res) => {
     if (!user) {
       res.status(404).json({ message: "Email is not found" });
     } else {
-      console.log("Login password (plain):", password); // From req.body
-      console.log("User's hashed password:", user.password); // From DB
-
       const isMatch = await bcrypt.compare(password, user.password);
-      // console.log(
-      // `${isMatch}\n input password:${req.body.password}\n$stored password:${user.password}`
-      // );
       if (!isMatch) {
         res.status(401).json({ message: "Invalid password" });
       } else {
