@@ -3,9 +3,19 @@ const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 
 const register = async (req, res) => {
+  const { email, name, password } = req.body;
+
+  // Validate user input
+  if (!name || !email || !password) {
+    return res
+      .status(400)
+      .json({ message: "Name, email and password are required" });
+  }
   try {
-    const user = new User(req.body);
+    const user = new User({ email, name, password });
+    console.log(`Password before saving ${user.password}`);
     await user.save();
+    console.log(`Password after saving ${user.password}`);
     res.json(user);
   } catch (err) {
     console.error(err);
@@ -15,11 +25,25 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
   try {
-    const user = await User.findOne({ email: req.body.email });
+    const { email, password } = req.body;
+
+    // Validate user input
+    if (!email || !password) {
+      res.status(400).json({ message: "Email and password are required" });
+      return;
+    }
+
+    const user = await User.findOne({ email });
     if (!user) {
-      res.status(401).json({ message: "Invalid email" });
+      res.status(404).json({ message: "Email is not found" });
     } else {
-      const isMatch = await bcrypt.compare(req.body.password, user.password);
+      console.log("Login password (plain):", password); // From req.body
+      console.log("User's hashed password:", user.password); // From DB
+
+      const isMatch = await bcrypt.compare(password, user.password);
+      // console.log(
+      // `${isMatch}\n input password:${req.body.password}\n$stored password:${user.password}`
+      // );
       if (!isMatch) {
         res.status(401).json({ message: "Invalid password" });
       } else {

@@ -23,7 +23,7 @@ PUT http://localhost:3001/api/products/68163c177861fefd6bb3cd15
 Content-Type: application/json
 
 {
-    "price": 33.99
+    "price": 33.12
 }
 
 #delete a product
@@ -37,9 +37,9 @@ POST http://localhost:3001/api/auth/register
 Content-Type: application/json
 
 {
-    "name":"gwine",
-    "password":"phone123",
-    "email":"gwinedev@gmail.com"
+    "name":"Frank Lampard",
+    "password":"isaac123",
+    "email":"franklaw@gmail.com"
 }
 
 
@@ -49,7 +49,8 @@ POST http://localhost:3001/api/auth/login
 Content-Type: application/json
 
 {
-    "name":"gwine",
-    "password":"phone123",
-    "email":"gwinedev@gmail.com"
+    "email":"franklaw@gmail.com",
+    "password":"isaac123"
 }
+
+# $2b$10$jCJMCx8TDM947DWpEAnZh.2fHYbBj3.OA6LreVWR/1sBKcFz98/v2
