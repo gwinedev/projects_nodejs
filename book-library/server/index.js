@@ -4,7 +4,7 @@ const cors = require("cors");
 require("dotenv").config();
 // const mongoose = require("./config/db");
 const PORT = process.env.PORT || 5001;
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 
 app.use(cors());
 app.use(express.json());
@@ -42,6 +42,28 @@ async function testConnection() {
       const result = await books.toArray();
       res.send(result);
     });
+
+    // update a book
+    app.patch("/book/:id", async (req, res) => {
+      const id = req.params.id;
+      const updatedBook = req.body;
+      const filter = { _id: new ObjectId(id) };
+      const options = { upsert: true };
+
+      const updateDoc = {
+        $set: {
+          ...updatedBook,
+        },
+      };
+      const result = await bookCollections.updateOne(
+        filter,
+        updateDoc,
+        options
+      );
+      res.send(result);
+    });
+
+    // delete a book
 
     // Send a ping to confirm successful connection
     await client.db("admin").command({ ping: 1 });

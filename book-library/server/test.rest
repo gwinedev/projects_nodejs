@@ -15,3 +15,13 @@ Content-Type: application/json
 #get all books
 ###
 GET http://localhost:5001/all-books
+
+# update a book
+###
+PATCH http://localhost:5001/book/681f42d14ea24a42fa72ba04
+Content-Type: application/json
+
+{
+    "authorName":"Abimbola Jennifer",
+    "bookTitle":"Working with young minds"
+}
