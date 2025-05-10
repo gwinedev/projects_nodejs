@@ -53,4 +53,13 @@ Content-Type: application/json
     "password":"isaac123"
 }
 
-# $2b$10$jCJMCx8TDM947DWpEAnZh.2fHYbBj3.OA6LreVWR/1sBKcFz98/v2
+#Product review post
+###
+POST http://localhost:3001/api/reviews
+Content-Type: application/json
+
+{
+  "rating": 5,
+  "comment": "Excellent product!",
+  "productId": "68163b1c7861fefd6bb3cd01"
+}
