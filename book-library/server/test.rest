@@ -1,0 +1,17 @@
+#upload a book
+###
+POST http://localhost:5001/upload-book
+Content-Type: application/json
+
+{
+    "authorName": "F. Scott Fitzgerald",
+    "imageURL": "https://example.com/gatsby_image.jpg",
+    "category": "Classic",
+    "bookDescription": "A tale of wealth, love, and the American Dream in the Jazz Age.",
+    "bookTitle": "The Great Gatsby",
+    "bookPdfUrl": "https://example.com/gatsby_pdf.pdf"
+  }
+
+#get all books
+###
+GET http://localhost:5001/all-books
