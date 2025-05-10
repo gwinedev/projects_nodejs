@@ -25,3 +25,12 @@ Content-Type: application/json
     "authorName":"Abimbola Jennifer",
     "bookTitle":"Working with young minds"
 }
+
+#delete a book
+###
+DELETE http://localhost:5001/book/681f42d14ea24a42fa72ba04
+
+
+#get book using category
+###
+GET http://localhost:5001/all-book/?category=Horror

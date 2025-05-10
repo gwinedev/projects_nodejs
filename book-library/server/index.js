@@ -64,6 +64,23 @@ async function testConnection() {
     });
 
     // delete a book
+    app.delete("/book/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const result = await bookCollections.deleteOne(filter);
+      res.send(result);
+    });
+
+    // find by category
+    app.get("/all-book", async (req, res) => {
+      let query = {};
+      if (req.query?.category) {
+        query = { category: req.query.category };
+        console.log(query);
+      }
+      const result = await bookCollections.find(query).toArray();
+      res.send(result);
+    });
 
     // Send a ping to confirm successful connection
     await client.db("admin").command({ ping: 1 });
