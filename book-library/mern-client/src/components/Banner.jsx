@@ -1,4 +1,5 @@
 import React from "react";
+import BannerCard from "../home/BannerCard";
 
 const Banner = () => {
   return (
@@ -7,7 +8,8 @@ const Banner = () => {
         {/* left hand side */}
         <div className="md:w-1/2 space-y-8 h-full">
           <h2 className="text-5xl font-bold leading-snug text-black">
-            Buy and Sell Your Book <span className="text-blue-700">for the best prices</span>
+            Buy and Sell Your Book{" "}
+            <span className="text-blue-700">for the best prices</span>
           </h2>
           <p className="md:w-4/5 ">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum iure
@@ -28,7 +30,10 @@ const Banner = () => {
             </button>
           </div>
         </div>
-        <div>{/* right hand side */}</div>
+        <div>
+          {/* right hand side */}
+          <BannerCard />
+        </div>
       </div>
     </div>
   );
