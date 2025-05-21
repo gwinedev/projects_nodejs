@@ -4,11 +4,11 @@ POST http://localhost:5001/upload-book
 Content-Type: application/json
 
 {
-    "authorName": "F. Scott Fitzgerald",
-    "imageURL": "https://example.com/gatsby_image.jpg",
-    "category": "Classic",
-    "bookDescription": "A tale of wealth, love, and the American Dream in the Jazz Age.",
-    "bookTitle": "The Great Gatsby",
+    "authorName": "Denise Hunter",
+    "imageURL": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1726077541i/216052965.jpg",
+    "category": "Christian Fiction",
+    "bookDescription": "Maggie Reynolds is finally ready for love",
+    "bookTitle": "The Summer of You and Me",
     "bookPdfUrl": "https://example.com/gatsby_pdf.pdf"
   }
 
@@ -18,12 +18,16 @@ GET http://localhost:5001/all-books
 
 # update a book
 ###
-PATCH http://localhost:5001/book/681f42d14ea24a42fa72ba04
+PATCH http://localhost:5001/book/681f42e54ea24a42fa72ba05
 Content-Type: application/json
 
 {
-    "authorName":"Abimbola Jennifer",
-    "bookTitle":"Working with young minds"
+    "imageUrl":"https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1567137631l/52780142.jpg",
+    "authorName":"Jennie Allen",
+    "category":"Self Help",
+    "bookDescription":"The visionary behind the million-strong",
+    "bookTitle":"Get Out of Your Head: Stopping the Spiral of Toxic Thoughts",
+    "bookPdfUrl":""
 }
 
 #delete a book

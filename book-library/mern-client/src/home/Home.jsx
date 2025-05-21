@@ -1,7 +1,14 @@
 import React from "react";
+import Banner from "../components/Banner";
+import FavouriteBooks from "./FavouriteBooks";
 
-const home = () => {
-  return <div>Hello, World!</div>;
+const Home = () => {
+  return (
+    <div>
+      <Banner />
+      <FavouriteBooks />
+    </div>
+  );
 };
 
-export default home;
+export default Home;
