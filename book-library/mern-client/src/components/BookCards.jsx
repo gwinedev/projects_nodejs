@@ -1,4 +1,6 @@
 import React, { useRef, useState } from "react";
+import { FaCartShopping } from "react-icons/fa6";
+
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -44,12 +46,19 @@ const BookCards = ({ headline, books }) => {
           {books.map((book) => (
             <SwiperSlide key={book._id}>
               {" "}
-              <Link to="/">
-                <div>
+              <Link to={`/book/${book._id}`}>
+                <div className="relative">
                   <img src={book.imageUrl} />
+                  <div className="absolute top-3 right-3 bg-blue-700 hover:bg-black p-2 rounded">
+                    <FaCartShopping className="w-4 h-4 text-white" />
+                  </div>
                 </div>
                 <div>
                   <h3>{book.bookTitle}</h3>
+                  <p>{book.authorName}</p>
+                  <div>
+                    <p>$10:00</p>
+                  </div>
                 </div>
               </Link>
             </SwiperSlide>

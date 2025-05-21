@@ -4,6 +4,7 @@ import Shop from "../shop/Shop";
 import About from "../components/About";
 import Blog from "../components/Blog";
 import Home from "../home/Home";
+import SingleBook from "../shop/SingleBook";
 
 const router = createBrowserRouter([
   {
@@ -12,7 +13,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home />
+        element: <Home />,
       },
       {
         path: "/shop",
@@ -25,6 +26,12 @@ const router = createBrowserRouter([
       {
         path: "/blog",
         element: <Blog />,
+      },
+      {
+        path: "/book/:id",
+        element: <SingleBook />,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5001/book/${params.id}`),
       },
     ],
   },

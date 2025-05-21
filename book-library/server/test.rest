@@ -38,3 +38,7 @@ DELETE http://localhost:5001/book/681f42d14ea24a42fa72ba04
 #get book using category
 ###
 GET http://localhost:5001/all-book/?category=Horror
+
+# get one book
+###
+GET http://localhost:5001/book/681f43504ea24a42fa72ba0d

@@ -43,6 +43,14 @@ async function testConnection() {
       res.send(result);
     });
 
+    // get a book
+    app.get("/book/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const result = await bookCollections.findOne(filter);
+      res.send(result);
+    });
+
     // update a book
     app.patch("/book/:id", async (req, res) => {
       const id = req.params.id;
