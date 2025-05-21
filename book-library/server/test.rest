@@ -18,15 +18,15 @@ GET http://localhost:5001/all-books
 
 # update a book
 ###
-PATCH http://localhost:5001/book/681f42e54ea24a42fa72ba05
+PATCH http://localhost:5001/book/681f43504ea24a42fa72ba0d
 Content-Type: application/json
 
 {
-    "imageUrl":"https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1567137631l/52780142.jpg",
-    "authorName":"Jennie Allen",
-    "category":"Self Help",
-    "bookDescription":"The visionary behind the million-strong",
-    "bookTitle":"Get Out of Your Head: Stopping the Spiral of Toxic Thoughts",
+    "imageUrl":"https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1729890029i/220838350.jpg",
+    "authorName":"Iliana Xander",
+    "category":"Mystery, Crime, Fiction, Thriller, Suspense",
+    "bookDescription":"Mackenzie Casper is a brilliant student.",
+    "bookTitle":"Love, Mom",
     "bookPdfUrl":""
 }
 
