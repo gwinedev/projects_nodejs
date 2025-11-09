@@ -9,7 +9,7 @@ app.use(express.json());
 
 app.use("/api/products", productRoutes);
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   connectDB();
   console.log(`Server started on port ${PORT}...`);
