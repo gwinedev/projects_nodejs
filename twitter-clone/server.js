@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import connectDB from "./db/connectDB.js";
 
 const app = express();
-dotenv.config();
+dotenv.config({ quiet: true });
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

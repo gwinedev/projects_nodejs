@@ -1,6 +1,7 @@
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import { generateTokenAndSetCookie } from "../lib/utils/generateToken.js";
+import { error } from "console";
 
 export const signup = async (req, res) => {
   try {
@@ -19,6 +20,11 @@ export const signup = async (req, res) => {
     if (existingEmail) {
       res.status(400).json({ error: "Email already exists" });
     }
+    if (password.length < 6) {
+      return res
+        .status(400)
+        .json({ error: "Password must be at least 6 characters long" });
+    }
 
     // hash password
     const salt = await bcrypt.genSalt(10);
@@ -30,7 +36,6 @@ export const signup = async (req, res) => {
       email: email,
       password: hashPassword,
     });
-    console.log(User.email);
 
     if (newUser) {
       generateTokenAndSetCookie(newUser._id, res);
@@ -41,6 +46,7 @@ export const signup = async (req, res) => {
         fullname: newUser.fullname,
         username: newUser.username,
         email: newUser.email,
+        password: hashPassword,
         followers: newUser.followers,
         following: newUser.following,
         profileImg: newUser.profileImg,
