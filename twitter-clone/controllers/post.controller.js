@@ -1,5 +1,6 @@
 // import User from "../models/user.model.js";
 import Post from "../models/post.model.js";
+import Notification from "../models/notification.model.js";
 import { v2 as cloudinary } from "cloudinary";
 
 export const createPost = async (req, res) => {
@@ -73,7 +74,7 @@ export const commentOnPost = async (req, res) => {
   try {
     const { text } = req.body;
     console.log(text);
-    
+
     const postId = req.params.id;
     const userId = req.user._id;
 
@@ -83,14 +84,46 @@ export const commentOnPost = async (req, res) => {
     if (!post) return res.status(400).json({ error: "Post not found" });
 
     console.log(post.comments);
-    
+
     const comment = { user: userId, text };
     post.comments.push(comment);
 
-    await post.save()
-    res.status(200).json(post)
+    await post.save();
+    res.status(200).json(post);
   } catch (error) {
     console.error("Error with commentOnPost controller", error.message);
-    res.status(400).json({ error: "Internal Server error" })
+    res.status(400).json({ error: "Internal Server error" });
+  }
+};
+
+export const likeUnlikePost = async (req, res) => {
+  try {
+    const { id: postId } = req.params;
+    const userId = req.user._id;
+
+    const post = await Post.findById(postId);
+
+    if (!post) {
+      res.status(404).json({ error: "Posts not found" });
+    }
+    const userLikedPost = post.likes.includes(userId);
+
+    if (userLikedPost) {
+      await Post.updateOne({ _id: postId }, { $pull: { likes: userId } });
+      res.status(200).json({ message: "Post unliked" });
+    } else {
+      await Post.updateOne({ _id: postId }, { $push: { likes: userId } });
+
+      const notification = new Notification({
+        from: userId,
+        to: post.user,
+        type: "like",
+      });
+      await notification.save();
+      res.status(200).json({ message: "Post liked" });
+    }
+  } catch (error) {
+    console.error("Error in likeUnlikePost controoler", error.message);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
