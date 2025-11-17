@@ -13,7 +13,6 @@ export const signup = async (req, res) => {
         .json({ error: "Please enter the correct email format." });
     }
     const existingUser = await User.findOne({ username });
-    console.log("I ran" + existingUser);
     if (existingUser) {
       return res.status(400).json({ error: "Username already exists" });
     }
@@ -21,7 +20,6 @@ export const signup = async (req, res) => {
     if (existingEmail) {
       return res.status(400).json({ error: "Email already exists" });
     }
-    console.log("I ran" + existingEmail);
 
     if (password.length < 6) {
       return res
@@ -60,4 +58,9 @@ export const signup = async (req, res) => {
     console.error("Error in signup", error.message);
     res.status(500).json({ error: "Internal Server Error" });
   }
+};
+
+export const login = async (req, res) => {
+  console.log("Login portal");
+  res.json("Login portal");
 };
