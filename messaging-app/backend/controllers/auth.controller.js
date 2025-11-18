@@ -86,3 +86,13 @@ export const login = async (req, res) => {
     bio: user.bio,
   });
 };
+
+export const signout = async (req, res) => {
+  res.cookie = ("jwt", "", { maxAge: 0 });
+  res.status(200).json({ message: "Logged out successfully" });
+};
+
+export const getMe = async (req, res)=>{
+  const user = await User.findOne(req.user._id).select("-password")
+  res.status(200).json(user)
+}
