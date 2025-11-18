@@ -12,8 +12,8 @@ import { protectRoute } from "../middleware/protectRoute.js";
 const router = express.Router();
 
 router.post("/signup", asyncHandler(signup));
-router.post("/login", protectRoute, login);
-router.post("/signout", protectRoute, signout);
-router.get("/me", protectRoute, getMe);
+router.post("/login", asyncHandler(login));
+router.post("/signout", asyncHandler(signout));
+router.get("/me", protectRoute, asyncHandler(getMe));
 
 export default router;
