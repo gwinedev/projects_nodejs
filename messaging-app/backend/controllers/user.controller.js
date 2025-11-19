@@ -35,7 +35,6 @@ export const followUnfollowUser = async (req, res) => {
       $pull: { followers: currentUser._id },
     });
 
-    await notification.save();
     res.status(200).json({
       message: `You have unfollowed ${userToModify.username} successfully`,
     });
@@ -66,3 +65,42 @@ export const getAllUsers = async (req, res) => {
   });
   res.status(200).json({ users });
 };
+
+export const updateUserProfile = async (req, res) => {
+  const { fullname, username, email, bio, currentPassword, newPassword } =
+    req.body;
+
+  const userId = req.user._id;
+  console.log(userId);
+  let user = await User.findById(userId);
+  if (!user) return res.status(404).json({ error: "User not found" });
+
+  if ((!currentPassword && newPassword) || (currentPassword && !newPassword)) {
+    res
+      .status(400)
+      .json({ error: "Please provide both current password and new password" });
+  }
+  if (currentPassword && newPassword) {
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    if (!isMatch)
+      return res.status(400).json({ error: "Your password is incorrect" });
+
+    if (newPassword < 6)
+      return res.status(400).json({
+        error: "Your new password must be at least 6 characters long.",
+      });
+    const salt = await bcrypt.genSalt(10);
+
+    user.password = await bcrypt.hash(newPassword, salt);
+  }
+  user.username = username || user.username;
+  user.fullname = fullname || user.fullname;
+  user.email = email || user.email;
+  user.bio = bio || user.bio;
+
+  await user.save();
+  user.password = null;
+
+  res.status(200).json({ user });
+};
+export const suggestedUsers = async (req, res) => {};
