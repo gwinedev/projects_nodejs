@@ -63,17 +63,17 @@ export const login = async (req, res) => {
     password,
     user?.password || ""
   );
-  // if (!user || !isPasswordCorrect) {
-  //   res.status(400).json({ error: "Invalid username or password" });
+  if (!user || !isPasswordCorrect) {
+    res.status(400).json({ error: "Invalid username or password" });
+  }
+
+  // if (!user) {
+  //   res.status(400).json({ error: "Invalid username" });
   // }
 
-  if (!user) {
-    res.status(400).json({ error: "Invalid username" });
-  }
-
-  if (!isPasswordCorrect) {
-    res.status(400).json({ error: "Invalid password" });
-  }
+  // if (!isPasswordCorrect) {
+  //   res.status(400).json({ error: "Invalid password" });
+  // }
   generateTokenandSetCookie(user._id, res);
 
   res.status(200).json({
@@ -92,7 +92,10 @@ export const signout = async (req, res) => {
   res.status(200).json({ message: "Logged out successfully" });
 };
 
-export const getMe = async (req, res)=>{
-  const user = await User.findOne(req.user._id).select("-password")
-  res.status(200).json(user)
-}
+export const getMe = async (req, res) => {
+  const user = await User.findOne(req.user._id).select("-password").populate({
+    path: "followers following",
+    select: "username",
+  });
+  res.status(200).json(user);
+};

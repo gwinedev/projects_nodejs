@@ -1,5 +1,6 @@
 import bcrypt from "bcryptjs";
 import User from "../models/user.model.js";
+import Notification from "../models/notification.model.js";
 
 export const getUserProfile = async (req, res) => {
   const { username } = req.params;
@@ -13,8 +14,8 @@ export const getUserProfile = async (req, res) => {
 
 export const followUnfollowUser = async (req, res) => {
   const { id } = req.params; //id of who to follow or unfollow
-  const userToModify = await User.findbyId(id);
-  const currentUser = await User.findbyId(req.user._id);
+  const userToModify = await User.findById(id);
+  const currentUser = await User.findById(req.user._id);
 
   if (id === currentUser._id.toString()) {
     return res
@@ -24,14 +25,44 @@ export const followUnfollowUser = async (req, res) => {
   if (!userToModify) return res.status(404).json({ error: "User not found" });
   if (!currentUser) return res.status(404).json({ error: "User not found" });
 
-  const isFollowing = currentUser.following.includes(id);
+  const isFollowing = currentUser.following.includes(userToModify._id);
   if (isFollowing) {
     // Unfollow current user by 1. Pull currentUSer id from other user and vise versa
-    await User.findByIdAndUpdate(id, {
-      $pull: { following: currentUser._id },
-    });
     await User.findByIdAndUpdate(currentUser._id, {
-      $pull: { following: id },
+      $pull: { following: userToModify._id },
+    });
+    await User.findByIdAndUpdate(userToModify._id, {
+      $pull: { followers: currentUser._id },
+    });
+
+    await notification.save();
+    res.status(200).json({
+      message: `You have unfollowed ${userToModify.username} successfully`,
+    });
+  } else {
+    // follow user
+    await User.findByIdAndUpdate(currentUser._id, {
+      $push: { following: userToModify._id },
+    });
+    await User.findByIdAndUpdate(userToModify._id, {
+      $push: { followers: currentUser._id },
+    });
+    const notification = new Notification({
+      type: "follow",
+      from: currentUser._id,
+      to: userToModify._id,
+    });
+    await notification.save();
+    res.status(200).json({
+      message: `You have followed ${userToModify.username} successfully`,
     });
   }
+};
+
+export const getAllUsers = async (req, res) => {
+  const users = await User.find().select("-password -email").populate({
+    path: "followers following",
+    select: "username",
+  });
+  res.status(200).json({ users });
 };
