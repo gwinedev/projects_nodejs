@@ -103,4 +103,26 @@ export const updateUserProfile = async (req, res) => {
 
   res.status(200).json({ user });
 };
-export const suggestedUsers = async (req, res) => {};
+export const suggestedUsers = async (req, res) => {
+  const userId = req.user._id;
+
+  const usersFollowedByMe = await User.findById(userId).select("following");
+  const users = await User.aggregate([
+    // Exclude current user
+    {
+      $match: {
+        _id: { $ne: userId },
+      },
+    },
+    { $sample: { size: 10 } },
+  ]);
+  const filteredUsers = users.filter(
+    (user) => !usersFollowedByMe.following.includes(user._id)
+  );
+  const suggestedUsers = filteredUsers.slice(0, 5);
+
+  suggestedUsers.forEach((user) => {
+    user.password = null;
+  });
+  res.status(200).json({ users: suggestedUsers });
+};

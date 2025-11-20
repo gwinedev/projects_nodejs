@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import connectDB from "./db/connectDB.js";
 import authRoutes from "./routes/auth.route.js";
 import userRoutes from "./routes/user.route.js";
+import postRoutes from "./routes/post.route.js";
 import { errorHandler } from "./middleware/error.middleware.js";
 
 const app = express();
@@ -18,6 +19,7 @@ console.log(process.env.PORT);
 
 app.use("/api", authRoutes);
 app.use("/api", userRoutes);
+app.use("/api", postRoutes);
 app.use(errorHandler);
 
 app.listen(PORT, () => {
