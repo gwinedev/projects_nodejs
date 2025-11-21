@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <link rel="stylesheet" href="style.css" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Messaging App</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>My Messaging App</h1>
+
+    <!-- Sign up Page -->
+    <h3>Signup</h3>
+    <input id="fullname" placeholder="Fullname" />
+
+    <input id="username" placeholder="Username" />
+
+    <input id="password" placeholder="Password" />
+
+    <input id="email" placeholder="Email" type="email" />
+
+    <input id="bio" placeholder="Bio" />
+
+    <button onClick="signup()">Signup</button>
+
+    <pre id="output"></pre>
+
+    <script src="script.js"></script>
+
+    <script>
+      async function signup() {
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+        const fullname = document.getElementById("fullname").value;
+        const email = document.getElementById("email").value;
+        const bio = document.getElementById("bio").value;
+        const data = await signupUser(fullname, username, password, email, bio);
+        showOutput("output", data);
+      }
+    </script>
+  </body>
+</html>

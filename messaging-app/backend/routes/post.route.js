@@ -7,6 +7,6 @@ const router = express.Router();
 
 router.get("/", protectRoute, asyncHandler(getPosts));
 router.post("/create", protectRoute, asyncHandler(createPost));
-router.post("/delete", protectRoute, asyncHandler(deletePost));
+router.delete("/delete", protectRoute, asyncHandler(deletePost));
 
 export default router;
