@@ -16,3 +16,23 @@ async function signupUser(fullname, username, password, email, bio) {
   });
   return res.json();
 }
+
+// Login function
+async function loginUser(username, password) {
+  const res = await fetch(`${API}/auth/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, password }),
+    credentials: "include",
+  });
+  return res.json();
+}
+
+// Get me function
+async function fetchMe() {
+  const res = await fetch(`${API}/auth/me`, {
+    method: "GET",
+    credentials: "include",
+  });
+  return res.json();
+}

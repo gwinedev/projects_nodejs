@@ -1,24 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <h2>Login</h2>
-    <input id="username" placeholder="username">
-    <input id="password" placeholder="password">
+    <input id="username" placeholder="username" type="text"/>
+    <input id="password" placeholder="password" type="password"/>
     <button onclick="login()">Login</button>
 
+    <p>To signup click <a href="./signup.html">signup</a></p>
     <pre id="output"></pre>
 
     <script src="script.js"></script>
     <script>
-        async function login(){
-            
-        }
+      async function login() {
+        const username = document.getElementById("username").value;
+        console.log(username);
+        
+        const password = document.getElementById("password").value;
+        const data = await loginUser(username, password);
+        showOutput("output", data);
+      }
     </script>
-</body>
+  </body>
 </html>

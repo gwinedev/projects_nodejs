@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Get Me</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <h2>Check Logged-in User</h2>
+    <button onclick="getMe()">Get /me</button>
+
+    <pre id="output"></pre>
+
+    <script src="js/api.js"></script>
+    <script>
+      async function getMe() {
+        const data = await fetchMe();
+        showOutput("output", data);
+      }
+    </script>
+  </body>
+</html>

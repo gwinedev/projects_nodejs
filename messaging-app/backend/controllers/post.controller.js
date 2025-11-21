@@ -31,4 +31,25 @@ export const deletePost = async (req, res) => {
 export const commentOnPost = async (req, res) => {};
 export const likeUnlikePost = async (req, res) => {};
 export const getLikedPosts = async (req, res) => {};
-export const getPosts = async (req, res) => {};
+export const getMyPosts = async (req, res) => {
+  const userId = req.user._id;
+
+  const posts = await Post.find({ user: userId })
+    .sort({ createdAt: -1 })
+    .populate({ path: "user", select: "username" })
+    .populate({ path: "comments.user", select: "username" });
+
+  if (posts.length === 0) return res.status(200).json([]);
+  res.status(200).json({ posts });
+};
+export const getPosts = async (req, res) => {
+  const userId = req.params.userId;
+
+  const posts = await Post.find({ user: userId })
+    .sort({ createdAt: -1 })
+    .populate({ path: "user", select: "username" })
+    .populate({ path: "comments.user", select: "username" });
+
+  if (posts.length === 0) return res.status(200).json([]);
+  res.status(200).json({ posts });
+};
