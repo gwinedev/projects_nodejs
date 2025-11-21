@@ -28,9 +28,6 @@ export const deletePost = async (req, res) => {
   res.status(200).json({ message: "Post deleted successfully." });
 };
 
-export const commentOnPost = async (req, res) => {};
-export const likeUnlikePost = async (req, res) => {};
-export const getLikedPosts = async (req, res) => {};
 export const getMyPosts = async (req, res) => {
   const userId = req.user._id;
 
@@ -53,3 +50,22 @@ export const getPosts = async (req, res) => {
   if (posts.length === 0) return res.status(200).json([]);
   res.status(200).json({ posts });
 };
+
+export const commentOnPost = async (req, res) => {
+  const { text } = req.body;
+
+  const postId = req.params.postId;
+  const userId = req.user._id;
+
+  if (!text) return res.status(400).json({ error: "Text field is required" });
+
+  const post = await Post.findById(postId);
+  if (!post) return res.status(404).json({ error: "Post not found" });
+
+  const comment = { user: userId, text: text };
+  post.comments.push(comment);
+  await post.save();
+  res.status(200).json({ post });
+};
+export const likeUnlikePost = async (req, res) => {};
+export const getLikedPosts = async (req, res) => {};
