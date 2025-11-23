@@ -7,11 +7,13 @@ import {
   deletePost,
   getMyPosts,
   commentOnPost,
+  getLikedPosts,
 } from "../controllers/post.controller.js";
 
 const router = express.Router();
 
 router.get("/posts", protectRoute, asyncHandler(getMyPosts));
+router.get("/posts/likes", protectRoute, asyncHandler(getLikedPosts));
 router.get("/posts/:userId", protectRoute, asyncHandler(getPosts));
 router.post("/create", protectRoute, asyncHandler(createPost));
 router.post("/comment/:postId", protectRoute, asyncHandler(commentOnPost));

@@ -1,4 +1,5 @@
 import Post from "../models/post.model.js";
+import Notification from "../models/notification.model.js";
 
 export const createPost = async (req, res) => {
   const { text } = req.body;
@@ -67,5 +68,46 @@ export const commentOnPost = async (req, res) => {
   await post.save();
   res.status(200).json({ post });
 };
-export const likeUnlikePost = async (req, res) => {};
-export const getLikedPosts = async (req, res) => {};
+export const likeUnlikePost = async (req, res) => {
+  const { id: postId } = req.params;
+  const userId = req.user._id;
+
+  const post = await Post.findbyId(postId);
+  if (!post) return res.status(404).json({ error: "Post not found" });
+
+  const userLikedPost = post.likes.incudes(userId);
+
+  if (userLikedPost) {
+    await Post.updateOne({ _id: postId }, { $pull: { likes: userId } });
+    await Post.updateMany({ _id: userId }, { $pull: { LikedPosts: postId } });
+    res.status(200).json({ message: "Post unliked successfully" });
+  } else {
+    await Post.updateOne({ _id: podtId }, { $push: { likes: userId } });
+    await Post.updateOne({ _id: userId }, { $push: { LikedPosts: postId } });
+    res.status(200).json({ message: "Post liked successfully" });
+  }
+  const notification = new Notification({
+    from: userId,
+    to: post.user,
+    type: "like",
+  });
+  await notification.save();
+  res.status(200).json({ message: "You liked this post" });
+};
+export const getLikedPosts = async (req, res) => {
+  const user = req.user;
+
+  const likedPosts = await Post.find({
+    // Find all posts whose ID is inside the user’s list of liked post IDs
+    _id: { $in: user.likedPosts },
+  })
+    .populate({
+      path: "user",
+      select: "-password",
+    })
+    .populate({
+      path: "comments.user",
+      select: "-password",
+    });
+  res.status(200).json({ likedPosts });
+};
